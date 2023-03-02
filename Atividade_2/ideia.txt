@@ -18,3 +18,21 @@ Enquanto a profundidade exigida, não for atendida:
 fazer um dicionario e uma função para verificar quantas vezes a palavra-chave aparece no link
 com a quantidade de vezes que a palavra chave parece no link, a partir desse dicionario, 
 organizar para rankear as páginas
+
+#segunda tentativa
+acessar primeiro link passado
+inserir o link acessado na lista de links acessados (fazer uma função própria)
+buscar e guardar as ocorrências da palavra chave nesse link (depth 0) (no dicionario_de_ocorrencias)
+buscar todos os links desse link (depth 0) guardar na lista de links
+atualizar a depth (0 -> 1)
+Enquanto depth_atual <= depth
+	Para cada link encontrado na lista de links:
+		acessar cada link encontrado no link primário (depth 1)
+		inserir o link acessado na lista de links acessados      (fazer uma função própria)
+		retirar o link da lista de links a serem acessados
+		buscar e guardar as ocorrências da palavra chave nesse link (no dicionario_de_ocorrencias)
+		buscar todos os links desse link (depth 1) guardar na lista de links a serem acessados
+	depth_atual += 1
+		
+	
+	
