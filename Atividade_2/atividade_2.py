@@ -6,35 +6,31 @@ links_encontrados = []
 links_acessados = []
 url = "https://innsite.com.br/7-sites-para-colocar-link-na-bio/"
 palavra_chave = 'bio'
-depth = 0
+depth = 3
+contador = 0
 #para fazer a requisição
 requisicao, links_acessados = request(url, links_acessados) 
 #print(request)
 
-#search(palavra_chave, url, depth)
+posicoes = encontrar_ocorrencias(palavra_chave, requisicao)
+dicionario_de_ocorrencias = guardar_ocorrencias(requisicao, posicoes, url, dicionario_de_ocorrencias, palavra_chave, contador)
+#ler_dicionario(dicionario_de_ocorrencias)
 
-contador_depth = 0
-#Se o contador dor < ou igual a depth (modificar depois)
-while contador_depth <= depth:
-    #para encontrar ocorrências 
-    posicoes = encontrar_ocorrencias(palavra_chave, requisicao)
+links_encontrados = buscar_links(url)
+referencias_por_link = {}
 
-    if len(posicoes) > 0:
-        #para retornar uma lista com todas as posições da substring
-        dicionario_de_ocorrencias = guardar_ocorrencias(requisicao, posicoes, url, dicionario_de_ocorrencias, palavra_chave)
+contador += 1 
 
-    ler_dicionario(dicionario_de_ocorrencias)
+while contador < depth:
+    for link in links_encontrados:
+        dicionario_de_ocorrencias, links_acessados = acessar_links_de_links(links_encontrados, links_acessados, palavra_chave, url,
+                                                                             contador, dicionario_de_ocorrencias)    
 
-    #pegar todos os links da página
-    links = buscar_links(requisicao)
+    contador += 1
 
-    #for link in links
-    print()
-    print(links)
-    print(len(links))
-    print()
-    print(links_acessados)
-    print(len(links_acessados))
+print(dicionario_de_ocorrencias)
 
-    contador_depth += 1 
+
+
+depth = 1
 
