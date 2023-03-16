@@ -6,20 +6,22 @@ const server = net.createServer();
 //cria uma lista de sockets
 let sockets = [];
 //cria a "matriz" do jogo da velha
-let board = ['-', '-', '-', '-', '-', '-', '-', '-', '-'];
+let jogo = ['-', '-', '-', '-', '-', '-', '-', '-', '-'];
 //cria o player atual como X
-let currentPlayer = 'X';
+let jogadorAtual = 'X';
+
+var vencedores = {}; 
 
 //assim que o socket se conecta, uma mensagem no servidor é lançada
 server.on('connection', (socket) => {
-  console.log('New client connected');
+  console.log('Novo cliente conectado');
 
   //na linha abaixo o socket que se conectou ao servidor, e inserido na lista de sockets
   sockets.push(socket);
 
   //se a lista de sockets chegar ao tamanho 2, o jogo se inicia e uma mensagem é enviada aos jogadores
   if (sockets.length === 2) {
-    broadcast(`Player 1 (X) turn`);
+    broadcast(`Sua vez: Jogador 1 (X)`);
   }
 
   //O on 'data', é para tratar dadps recebidos pelo servidor (que o socket envia com write)
@@ -29,22 +31,30 @@ server.on('connection', (socket) => {
         sockets.forEach((s) => s.destroy());
     }
 
-    const move = parseInt(data, 10);
+    const jogada = parseInt(data, 10);
     
     //verifica se o movimento realizado é valido
-    if (isNaN(move) || move < 0 || move > 8 || board[move] !== '-') {
-      socket.write('Invalid move\n');
+    if (isNaN(jogada) || jogada < 0 || jogada > 8 || jogo[jogada] !== '-') {
+      socket.write('Movimento Inválido\n');
       return;
     }
     
     //aqui atualiza a lista/matriz do jogo da velha, com o valor do player atual
-    board[move] = currentPlayer;
+    jogo[jogada] = jogadorAtual;
     
     //verifica vencedor passando como parâmetro o player atual
-    if (checkWinner(currentPlayer)) {
+    if (checkWinner(jogadorAtual)) {
       //envia a mensagem para o vencedor
-      broadcast(`${currentPlayer} wins!`);
-      broadcast('Game over');
+      broadcast(`${jogadorAtual} wins!`);
+      broadcast('Fim de jogo');
+      //para cada socket na lista de sockets, eles serão destruídos após a checagem caso o jogo tenha terminado
+      sockets.forEach((s) => s.destroy());
+      return;
+    }
+
+    if(checkDraw(jogo)){
+      broadcast(`Empate`);
+      broadcast('Fim de jogo');
       //para cada socket na lista de sockets, eles serão destruídos após a checagem caso o jogo tenha terminado
       sockets.forEach((s) => s.destroy());
       return;
@@ -54,20 +64,20 @@ server.on('connection', (socket) => {
     aqui altera o player atual, após a jogada feita na linha 37, o player será alterado para 'O' se
     o player atual é o 'X' e para 'X' se o atual é o 'O', operador ternário
     */
-    const nextPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    currentPlayer = nextPlayer;
+    const proximoJogador = jogadorAtual === 'X' ? 'O' : 'X';
+    jogadorAtual = proximoJogador;
     
     //manda a informação de quem é o jogador que ira jogar
-    broadcast(`Player ${nextPlayer} (${currentPlayer}) turn`);
+    broadcast(`Sua vez jogador ${proximoJogador} (${jogadorAtual})`);
     broadcastBoard();
   });
   
   //quando o socket for desconectado
   socket.on('close', () => {
-    console.log('Client disconnected');
+    console.log('Cliente Desconectado');
     //envia um a mensagem aos outros sockets informando que um foi desconectado
     sockets = sockets.filter((s) => s !== socket);
-    broadcast('Other player disconnected');
+    broadcast('O outro jogador desconectou');
     sockets.forEach((s) => s.destroy());
   });
 
@@ -80,7 +90,7 @@ server.on('connection', (socket) => {
   function broadcastBoard() {
     let boardMessage = '';
     for (let i = 0; i < 9; i++) {
-      boardMessage += `${board[i]} `;
+      boardMessage += `${jogo[i]} `;
       if ((i + 1) % 3 === 0) {
         boardMessage += '\n';
       }
@@ -89,8 +99,8 @@ server.on('connection', (socket) => {
   }
   
   //verifica se o player atual é o vencedor
-  function checkWinner(player) {
-    const rows = [
+  function checkWinner(jogador) {
+    const linhas = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -98,24 +108,31 @@ server.on('connection', (socket) => {
       [1, 4, 7],
       [2, 5, 8],
       [0, 4, 8],
-      [2, 4, 6],
+      [2, 4, 6],    
     ];
     
     /*
     pega todos as colunas que possivelmente fariam um vencedor e analizam se algumas dessas listas tem 
     o mesmo símbolo em sequencia, se sim, o jogo tem um vencedor
     */
-    for (let i = 0; i < rows.length; i++) {
-      const [a, b, c] = rows[i];
-      if (board[a] === player && board[b] === player && board[c] === player) {
+    for (let i = 0; i < linhas.length; i++) {
+      const [a, b, c] = linhas[i];
+      if (jogo[a] === jogador && jogo[b] === jogador && jogo[c] === jogador) {
+
         return true;
       }
     }
     
     return false;
   }
+
+  function checkDraw(jogo){
+    if(jogo.includes('-') === false && checkWinner(jogador) === false){
+        return true;
+    }
+  }
 });
 
 server.listen(3000, () => {
-  console.log('Server started on port 3000');
+  console.log('Servidor iniciado na porta 3000');
 });
