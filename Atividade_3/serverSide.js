@@ -10,7 +10,7 @@ let jogo = ['-', '-', '-', '-', '-', '-', '-', '-', '-'];
 //cria o player atual como X
 let jogadorAtual = 'X';
 
-var vencedores = {}; 
+var placar = {'X': 0, 'O': 0, 'Empate': 0};
 
 //assim que o socket se conecta, uma mensagem no servidor é lançada
 server.on('connection', (socket) => {
@@ -49,14 +49,7 @@ server.on('connection', (socket) => {
       broadcast('Fim de jogo');
       //para cada socket na lista de sockets, eles serão destruídos após a checagem caso o jogo tenha terminado
       sockets.forEach((s) => s.destroy());
-      return;
-    }
-
-    if(checkDraw(jogo)){
-      broadcast(`Empate`);
-      broadcast('Fim de jogo');
-      //para cada socket na lista de sockets, eles serão destruídos após a checagem caso o jogo tenha terminado
-      sockets.forEach((s) => s.destroy());
+      console.log(placar);
       return;
     }
     
@@ -118,19 +111,28 @@ server.on('connection', (socket) => {
     for (let i = 0; i < linhas.length; i++) {
       const [a, b, c] = linhas[i];
       if (jogo[a] === jogador && jogo[b] === jogador && jogo[c] === jogador) {
-
+        placar[jogador] += 1;
+        jogo = ['-', '-', '-', '-', '-', '-', '-', '-', '-'];
         return true;
+      } else if (jogo.includes('-') === false){
+        placar['Empate'] += 1;
+        draw();
       }
     }
     
     return false;
   }
 
-  function checkDraw(jogo){
-    if(jogo.includes('-') === false && checkWinner(jogador) === false){
-        return true;
-    }
+  function draw(){
+    broadcast(`Empate`);
+    broadcast('Fim de jogo');
+    //para cada socket na lista de sockets, eles serão destruídos após a checagem caso o jogo tenha terminado
+    sockets.forEach((s) => s.destroy());
+    jogo = ['-', '-', '-', '-', '-', '-', '-', '-', '-'];
+    console.log(placar);
+    return;
   }
+    
 });
 
 server.listen(3000, () => {
