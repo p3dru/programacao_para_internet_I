@@ -22,16 +22,19 @@ def buscar_links(soup):
 #fazer a requisição
 def request(url: str, acessados: list):
     if url not in acessados:
-        resposta = requests.get(url)
-        soup = BeautifulSoup(resposta.text, 'html.parser')
-        #retorna um objeto soup para processamento futuro
-        acessados.append(url)
-        
+        if 'http://' or "http://" in url: 
+            resposta = requests.get(url)
+            soup = BeautifulSoup(resposta.text, 'html.parser')
+            #retorna um objeto soup para processamento futuro
+            acessados.append(url)
+        else:
+            pass
+
         return soup, acessados
 
 
 #para guardar todas as ocorrências da palavra chave no texto, em uma posição de lista
-def encontrar_ocorrencias(substring: str, soup):
+def encontrar_ocorrencias(substring: str, soup, dicionario, url):
     texto = soup.get_text()
     posicoes = []
     posicao = -1
@@ -42,16 +45,18 @@ def encontrar_ocorrencias(substring: str, soup):
             break
         posicoes.append(posicao)
     #retorna a lista de posições no texto
-    return posicoes
+    dicionario[url] = len(posicoes)
+
+    return posicoes, dicionario
 
 #para registrar as ocorrências no dicionario
-def guardar_ocorrencias(soup, posicao: list, url, dicionario, substring, depth: int):
+def guardar_ocorrencias(soup, posicao: list, url, dicionario, substring):
     texto = soup.get_text()
     contador = 1
     
     for x in posicao:
         if x >= 20 or x <= len(texto - 20):
-            dicionario[f'Ocorrencia {contador}:'] = f'||{texto[x - 20 : x + (20 + len(substring))] }|| em: {url}, Depth: {depth}'
+            dicionario[f'Ocorrencia {contador}:'] = f'||{texto[x - 20 : x + (20 + len(substring))] }|| em: {url}'
             contador += 1
 
     return dicionario
@@ -60,22 +65,5 @@ def guardar_ocorrencias(soup, posicao: list, url, dicionario, substring, depth: 
 def ler_dicionario(dicionario: dict):
     for chave, valor in dicionario.items():
         print(chave, "->", valor)
-
-#aqui serve para pegar todos os links dos links associados
-def acessar_links_de_links(lista_de_links: list, acessados: list, palavra_chave: str, url, contador, dicionario):
-    dicionario = {}
-    pocicoes = []
-    links_de_links = []
-    for link in lista_de_links:
-        requisicao, links_acessados = request(link, links_acessados)
-        posicoes = encontrar_ocorrencias(palavra_chave, requisicao)
-        dicionario = guardar_ocorrencias(requisicao, posicoes, url, dicionario, palavra_chave, contador)
-        links_de_links = buscar_links(link)
-        dicionario, links_acessados = acessar_links_de_links(lista_de_links, acessados, palavra_chave, url, contador,
-                                                             dicionario)
-    
-    return dicionario, links_acessados
-
-        
 
 
