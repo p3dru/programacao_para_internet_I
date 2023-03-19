@@ -22,7 +22,7 @@ def buscar_links(soup):
 #fazer a requisição
 def request(url: str, acessados: list):
     if url not in acessados:
-        if 'http://' or "http://" in url: 
+        if 'http://' or "https://" in url: 
             resposta = requests.get(url)
             soup = BeautifulSoup(resposta.text, 'html.parser')
             #retorna um objeto soup para processamento futuro
