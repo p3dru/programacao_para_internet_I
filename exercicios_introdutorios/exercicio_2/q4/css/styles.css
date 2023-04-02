@@ -1,0 +1,15 @@
+body{
+    background-image: linear-gradient(to left, #c17675, #8d8d8d);
+}
+
+h1 {
+    color: #fe4d45;
+}
+
+h2 {
+    color: darkgreen;
+}
+
+.footer-fake{
+    text-align: center;
+}

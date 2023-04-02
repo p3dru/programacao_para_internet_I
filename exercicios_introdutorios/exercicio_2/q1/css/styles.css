@@ -1,0 +1,13 @@
+body{
+    background-image: linear-gradient(to right,#3c0000, #873535);
+}
+
+h1{
+    background-image: linear-gradient(to right, #873535, #3c0000);
+}
+
+.body2{
+    background-image: radial-gradient(circle, #873535, #873535, #3c0000);
+    width: 100%;
+    height: 100%;
+}

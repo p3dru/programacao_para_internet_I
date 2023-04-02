@@ -1,0 +1,7 @@
+body{
+    background: linear-gradient(to right, rgba(56,12,65,1) 0%, rgba(90,18,80,1) 35%, rgba(120,45,190,1) 100%);
+}
+
+h1 {
+    background: linear-gradient(to left, rgba(56,12,65,1) 0%, rgba(90,18,80,1) 35%, rgba(120,45,190,1) 100%);
+}
