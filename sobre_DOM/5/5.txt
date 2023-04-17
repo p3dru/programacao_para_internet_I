@@ -1,0 +1,3 @@
+O botão "limpar/mostrar" da questão 3 faz isso alterando a visibilidade do parágrafo para hidden
+e visible,  descrita no css pela classe "hidden", utilizando a o método .toggle() da propriedade
+classList de querySelector.
