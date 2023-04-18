@@ -1,0 +1,42 @@
+body,html {
+  padding: 0;
+  margin:  0;
+  height:  100%;
+}
+
+body {
+  background-image: url(imagens\fundo_neo.jpg);
+  background-color: black;
+  background-repeat: repeat-y;
+  background-position: right top ;
+  background-attachment: fixed;
+}
+
+h1, p {
+	width: 88%;
+}
+
+table {
+	width: 100%;
+}
+
+h1 {
+	font-family: arial;
+	font-style: italic;
+	color: white;	
+	background-image: url(imagens\fundo_matrix.jpg);
+}
+
+h1.direita {
+	text-align: right;	
+}
+
+p{
+	color: lightgreen;
+	font-family: verdana;
+	line-height: 1.2;
+	text-align: justify;
+}
+
+
+
