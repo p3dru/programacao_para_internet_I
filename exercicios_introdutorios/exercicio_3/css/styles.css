@@ -1,0 +1,78 @@
+html, sub, sup{
+    font-size: 16px;
+}
+
+/*gradiente*/
+.gradient{
+    background-image: linear-gradient(to left, #b3cce2, #D9CCC1);
+    font-family: Arial;
+}
+
+/*títulos*/
+h1{
+    font-size: 3rem;
+    letter-spacing: .5rem;
+    text-align: center;
+}
+
+h2{
+    font-size: 1.5rem;
+}
+
+h1, h2{
+    background-color: #005eb0;
+    color: #D9CCC1;
+}
+
+/*parágrafos*/
+p{
+    font-size: 1rem;
+    color: #024059;
+}
+
+.motivacional{
+    font-family: 'Tilt Neon', cursive;
+    line-height: 1.5rem;
+    text-align: justify;
+    margin: 0% 3% 0% 3%;
+}
+
+/*autor*/
+
+.autor, .data{
+    color: darkslategrey;
+    font-style: italic;
+}
+
+
+.autor{
+    text-align: right;    
+}
+
+/*data*/
+.data{
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+
+/**postagem riscada*/
+.riscado{
+    position: relative;
+}
+
+.riscado:before{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 1px solid;
+    border-color: inherit;
+    
+    -webkit-transform:rotate(-5deg);
+    -moz-transform:rotate(-5deg);
+    -ms-transform:rotate(-5deg);
+    -o-transform:rotate(-5deg);
+    transform:rotate(-5deg);
+}
