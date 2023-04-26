@@ -1,0 +1,75 @@
+1) Altere o código anterior validando se o campo foi preenchido. Para isso, verifique se o
+conteúdo passado é uma string vazia e exiba uma mensagem de erro nesse caso. Você
+pode exibir um alert do JS ou mesmo escrever na div algo com a fonte “vermelha”.
+
+Resposta:
+if (conteudo == ""){
+            conteudo = "Input vazio, digite algo";
+            document.getElementById('conteudo').innerHTML = conteudo;
+            document.getElementById('conteudo').style.color = 'red';
+            alert("Digite algo na caixa de texto");
+        } else {
+            document.getElementById('conteudo').style.color = 'black';
+            document.getElementById('conteudo').innerHTML = conteudo;
+        }
+
+2) Crie uma página com 2 campos e um botão. Crie também um script que realize alguma
+operação matemática entre os dois campos. Além disso, aceite apenas números fazendo
+a validação com a função isNaN().
+
+Resposta:
+document.addEventListener('DOMContentLoaded', function(){
+    var botaoSomar = document.getElementById('botaoSomar');
+    botaoSomar.addEventListener('click', somar);
+})
+
+function somar(){
+    var campo1 = document.getElementById('number1').value;
+    var campo2 = document.getElementById('number2').value;
+
+    var soma = 0;
+
+    if (typeof(campo1) != isNaN && typeof(campo2) !== isNaN){
+        campo1 = parseInt(campo1)
+        campo2 = parseInt(campo2)
+        soma = campo1 + campo2
+        document.getElementById("resultado").innerHTML = `O resultado é ${soma}`;   
+    }
+}
+
+3) Carregue uma imagem em um componente img a partir de um endereço relativo de uma
+imagem no seu “disco”. Para isso, tenha uma caixa de texto onde se digite o nome da
+imagem, uma div com id “resultado” e um botão que ao ser clicado, carrega a imagem.
+Para isso, considere que:
+a) document.createElement() é uma função que deve ser usada para criar a tag img;
+b) Podemos alterar o atributo src de uma imagem da seguinte forma:
+img.src = conteudo; //onde conteúdo é o endereço da imagem vinda de uma caixa
+de texto;
+c) Por fim, podemos adicionar a imagem à div: resultado.appendChild(img).
+https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+
+document.addEventListener('DOMContentLoaded', function(){
+    var botaoLoad = this.getElementById('exibirImg');
+    botaoLoad.addEventListener('click', exibir);
+})
+
+function exibir(){
+    //cria uma nova div
+    const novaDiv = document.createElement("div");
+
+    //cria uma nova tag img
+    const novaImg = document.createElement('img');
+    //adiciona o endereço de uma imagem local à tag img
+    novaImg.src = document.getElementById('nameImg').value;
+    console.log(novaImg.src);   
+
+    //adiciona a tag img à nova div criada
+    novaDiv.appendChild(novaImg);
+
+    //adicionar a imagem abaixo do elemento botao
+    const ultimoElemento = document.getElementById('exibirImg');
+    document.body.insertBefore(novaDiv, ultimoElemento.nextSibling);
+
+}
+
+4) 
