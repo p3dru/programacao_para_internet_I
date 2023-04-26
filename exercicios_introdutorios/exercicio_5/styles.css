@@ -1,0 +1,74 @@
+/*idéia: criar como se fossem cards aqui
+colocar uma div envolvendo outra div para
+que a div maior seja uma parte preta,
+quase como uma sombra, redonda
+A div interna ficaria como uma div
+quadrada, mas achatada (aumenta
+padding e margin), com uma cor beirando o branco
+a ideia é fazer ele parecer uma coisa cartunesca
+referência: https://programandosolucoes.dev.br/2021/06/22/card-html-css/
+usar adobe color para referência de cores*/
+
+/*titulo*/
+.title{
+    text-align: center;
+}
+
+/*bandas*/
+.bandas{
+    text-align: left;
+    background-color: #9C21EB;
+}
+
+/*estilos musicais*/
+.estilos{
+    justify-content: flex-start;
+}
+
+/*series*/
+.series{
+
+}
+
+/*animes*/
+.animes{
+
+}
+
+/*jogos*/
+.jogos{
+
+}
+
+/*comportamento*/
+.comportamento{
+
+}
+
+/*regras de comportamento*/
+.behavior {list-style-type: upper-roman;}
+
+/*emojis*/
+.emojis{
+
+}
+
+/*transito*/
+.transito{
+
+}
+/*placas de trânsito*/
+.pare{list-style-image: url('images/pare.jpeg');}
+
+.proibido-estacionar{list-style-image: url('images/proibido_estacionar.jpeg');}
+
+.proibido-bicicletas{list-style-image: url('images/proibido_bicicletas.jpeg');}
+
+.retorno-proibido{list-style-image: url('images/retorno_proibido.jpeg');}
+
+.velocidade-maxima{list-style-image: url('images/velocidade_maxima.jpeg');}
+
+/*livro*/
+.livro{
+
+}
