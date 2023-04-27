@@ -9,40 +9,43 @@ a ideia é fazer ele parecer uma coisa cartunesca
 referência: https://programandosolucoes.dev.br/2021/06/22/card-html-css/
 usar adobe color para referência de cores*/
 
+
+
 /*titulo*/
 .title{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*bandas*/
 .bandas{
-    text-align: left;
-    background-color: #9C21EB;
+    background: rgb(218, 211, 197) url('images/tecido-nota-musical-fundo-preto-140-cm-x-100-cm-comprar-tecido.jpg') repeat right top fixed;
 }
 
 /*estilos musicais*/
 .estilos{
-    justify-content: flex-start;
+    background:  rgb(218, 211, 197) url('images/1622320_423610044440518_2051767675_o.png') repeat right top fixed;
 }
 
 /*series*/
 .series{
-
+    background:  rgb(218, 211, 197) url('images/series.jpg') repeat right top fixed;
 }
 
 /*animes*/
 .animes{
-
+    background:  rgb(218, 211, 197) url('images/75-752370_m.jpg') repeat right top fixed;
 }
 
 /*jogos*/
 .jogos{
-
+    background:  rgb(218, 211, 197) url('images/23981-catalogar-todos-os-jogos-eletronicos-diapo-1.jpg') repeat right top fixed;
 }
 
 /*comportamento*/
 .comportamento{
-
+    background:  rgb(218, 211, 197) url('images/O+comportamento+de+seguir+uma+regra+depende+da+consequência+que+lhe+é+dada,+e+pode+portanto,+deixar+de+ocorrer+quando+não+houv.jpg') repeat right top fixed;
 }
 
 /*regras de comportamento*/
@@ -50,13 +53,18 @@ usar adobe color para referência de cores*/
 
 /*emojis*/
 .emojis{
+    background: url('images/emojis-11072022144546668.jpeg') repeat right top fixed;
 
 }
 
 /*transito*/
-.transito{
-
+.transito{  
+    background: url('images/placas-de-advertencia.jpg') repeat right top fixed;
 }
+.ul-transito{
+    padding-left: 70px;
+}
+
 /*placas de trânsito*/
 .pare{list-style-image: url('images/pare.jpeg');}
 
@@ -70,5 +78,35 @@ usar adobe color para referência de cores*/
 
 /*livro*/
 .livro{
+    background: url('images/assim_falou_zaratustra_pocket_9788525432124_hd.jpg') repeat right top fixed; 
+}
 
+
+/*cards gerais*/
+.card-externo{
+    border-radius: 5px;
+    box-shadow: 15px 15px 20px 0px rgba(0, 0, 0, 0.22);
+    padding: 30px;
+    margin: 20px;
+    width: 400px;
+    transition: all 0.2s ease-out;
+    display: block;
+    background-color: rgb(218, 211, 197);
+}
+
+/*card externo*/
+.card-interno{
+    background-color: black;
+    padding: 10px 10px 10px;
+    margin: 0px;
+    width: 500px;
+    color: rgb(218, 211, 197);
+    display: block;
+    border-radius: 10px;
+}
+
+/*linhas que possuem conteúdo à direita*/
+.direita{
+    position: relative;
+    right: -300px;
 }
