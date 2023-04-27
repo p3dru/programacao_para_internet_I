@@ -156,3 +156,24 @@ function showFormatting(){
     const lastElement = document.getElementById("label");
     document.body.insertBefore(newDiv, lastElement.nextSibling);
 }
+
+7) Crie uma funcionalidade em que o usuário digite um texto e clique em um botão. Ao clicar
+no botão, o texto deve ser inserido em um componente select com atributo size = 5. Para
+isso, use a função createElement() vista anteriormente para criar tags option e use a
+função appendChild para dicionar a opção criada no select.
+
+document.addEventListener('DOMContentLoaded', function(){
+    var addButton = this.querySelector('#button');
+    addButton.addEventListener('click', insert);
+});
+
+function insert(){
+    var newOption = document.createElement('option');
+    newOption.value = document.querySelector("#textbox").value;
+
+    var select = document.querySelector("#select");
+
+    select.appendChild(newOption);
+};
+
+(incompleta)
