@@ -72,4 +72,87 @@ function exibir(){
 
 }
 
-4) 
+4) Altere o exemplo anterior para que ele funcione com um componente select em que o value
+dos componentes sejam os endereços de 3 imagens. Ao mudar o conteúdo do
+componente, a imagem específica deve ser carregada.
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+
+Resposta:
+document.addEventListener('DOMContentLoaded', function(){
+    // seleciona o valor do elemento selecionado
+    const selectElement = document.querySelector('.picture');
+    selectElement.addEventListener('change', exibir);
+});
+
+function exibir(){
+    //cria uma nova div
+    const newDiv = document.createElement("div");
+
+    //cria uma nova tag de imagem
+    const newImg = document.createElement("img");
+    //pega o valor passado no select
+    newImg.src = document.querySelector('.picture').value;
+    console.log(newImg.src);
+
+    //adiciona a imagem à nova div criada
+    newDiv.appendChild(newImg);
+
+    //adiciona a imagem abaixo do elemento select
+    const lastElement = document.getElementById("label");
+    console.log(lastElement);
+    document.body.insertBefore(newDiv, lastElement.nextSibling);
+}
+
+
+5) Crie uma funcionalidade com vários checkboxes e valide se pelo menos um checkbox foi
+marcado. Utilize a função document.getElementsByName(nome) e percorra o array de
+componentes retornado testando a propriedade checked.
+
+function verify(){
+    const checkbox = document.querySelector('#term');
+
+    if(checkbox.checked){
+        //cria uma nova div
+        const newDiv = document.createElement("div");
+    
+        const newP = document.createElement("p");
+        newP.textContent = 'A responsabilidade agora é sua';
+        console.log(newP.value);
+    
+        newDiv.appendChild(newP);
+    
+        //adiciona a imagem abaixo do elemento select
+        const lastElement = document.getElementById("lastLabel");
+        console.log(lastElement);
+        document.body.insertBefore(newDiv, lastElement.nextSibling);
+    }
+}
+
+6) Escreva uma função que receba um texto como parâmetro e uma opção vinda de um
+select (maiúsculo ou minúsculo) e exiba o texto convertido de acordo com a opção.
+
+document.addEventListener('DOMContentLoaded', function(){
+    const select = this.querySelector(".formatting");
+    select.addEventListener('change', showFormatting)
+});
+
+function showFormatting(){
+    const newDiv = document.createElement('div');
+
+    const newP = document.createElement("p");
+
+    var option = document.querySelector(".formatting").value;
+
+    var text = document.querySelector('#textbox').value;
+
+    if(option == 'lower'){
+        newP.textContent = text.toLowerCase();
+    } else {
+        newP.textContent = text.toUpperCase();
+    }
+
+    newDiv.appendChild(newP);
+
+    const lastElement = document.getElementById("label");
+    document.body.insertBefore(newDiv, lastElement.nextSibling);
+}
