@@ -16,40 +16,61 @@ class Microblog{
     }
 
     retrieve(id){
+        var dados = [];
         for (var i = 0; i < this.postagens.length; i++){
-            if (id === this.postagens[i].id){
-                return this.postagens[i];
-            }
-            else {
-                return 'Nenhuma postagem com esse ID foi encontrada';
+            if (id == this.postagens[i].id){
+                dados = this.makeJSON(this.postagens[i]);
             }
         }
+
+        const json = JSON.stringify(dados);
+        return json;
     }
 
     update(postagem){
         var id = postagem.id;
         for (var i = 0; i < this.postagens.length; i++){
-            if (id === this.postagens[i].id){
+            if (id == this.postagens[i].id){
                 this.postagens[i] = postagem;
             }
         }
     }
 
     delete(id){
-        this.postagens = this.postagens.filter((postagem) => postagem.id !== id);   
+        this.postagens = this.postagens.filter((postagem) => postagem.id != id);   
     }
 
     retrieveAll(){
-        this.postagens.forEach((postagem) => {
-            console.log(`Id: ${postagem.id}\nConteúdo: ${postagem.text}\nLikes: ${postagem.likes}`);
-        })
+        var dados = [];
+        if (this.postagens.length > 0){
+            this.postagens.forEach((postagem) => {
+                dados.push(this.makeJSON(postagem));
+            });
+        } else {
+            dados = [];
+        }
+
+        //console.log(dados);
+        
+        const json = JSON.stringify(dados);
+        console.log(json);
+        return json;
     }
 
+    makeJSON(postagem){
+        var dados = {
+            id: postagem.id,
+            conteudo: postagem.text,
+            likes: postagem.likes
+        };
+
+        return dados;
+    }
 }
 
-const postagens = new Microblog();
+//const postagens = new Microblog();
 
-const postagem1 = new Postagem(1, 'Arroz é maravilhoso', 24);
+/*const postagem1 = new Postagem(1, 'Arroz é maravilhoso', 24);
 postagens.create(postagem1);
 const postagem2 = new Postagem(2, 'Feijão é maravilhoso', 3);
 postagens.create(postagem2);
@@ -62,22 +83,18 @@ postagens.create(postagem5);
 const postagem6 = new Postagem(6, 'Arroz é tiranossauro', 1334);
 postagens.create(postagem6);
 const postagem7 = new Postagem(2, 'Feijão é vida', 39239);
-
+*/
 //postagens.retrieveAll();
 
-postagens.delete(1);
+//postagens.delete(1);
 
 //postagens.retrieveAll();
 
 //var postagemSelecionada = postagens.retrieve(1);
 //console.log(postagemSelecionada);
 
-postagens.update(postagem7);
+//postagens.update(postagem7);
 
-postagens.retrieveAll();
+//postagens.retrieveAll();
 
-
-module.exports = [
-    Postagem,
-    Microblog
-];
+module.exports = {Postagem, Microblog};
