@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+    <p>Fiquei com preguiça e colei o Lorem</p>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam vel quam elementum pulvinar etiam non quam lacus. Neque gravida in fermentum et sollicitudin. Sem nulla pharetra diam sit amet nisl suscipit. Ultrices tincidunt arcu non sodales neque. Rutrum quisque non tellus orci. Adipiscing commodo elit at imperdiet. Donec et odio pellentesque diam volutpat commodo sed egestas. Condimentum lacinia quis vel eros donec ac odio. In aliquam sem fringilla ut morbi.
+
+        Senectus et netus et malesuada. Vitae turpis massa sed elementum. Velit laoreet id donec ultrices tincidunt arcu non sodales neque. Elementum curabitur vitae nunc sed velit dignissim. Proin nibh nisl condimentum id venenatis a. Id diam vel quam elementum pulvinar etiam. Pellentesque habitant morbi tristique senectus et netus. Semper quis lectus nulla at volutpat diam ut venenatis tellus. Diam quis enim lobortis scelerisque. At tempor commodo ullamcorper a lacus. Nisl pretium fusce id velit ut. Dictum varius duis at consectetur lorem donec massa sapien. Blandit cursus risus at ultrices mi tempus.
+
+        Eget mi proin sed libero enim sed faucibus turpis in. Vel pharetra vel turpis nunc eget lorem dolor sed. Commodo viverra maecenas accumsan lacus. Pharetra vel turpis nunc eget lorem dolor. Amet facilisis magna etiam tempor orci eu lobortis elementum nibh. Faucibus et molestie ac feugiat sed. Nisl pretium fusce id velit ut tortor. Viverra maecenas accumsan lacus vel facilisis volutpat est. Amet mauris commodo quis imperdiet massa. Ultricies lacus sed turpis tincidunt id aliquet risus. Elementum eu facilisis sed odio morbi. Amet massa vitae tortor condimentum lacinia quis vel eros. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Nullam ac tortor vitae purus. Justo laoreet sit amet cursus sit amet dictum sit. Viverra adipiscing at in tellus integer. At quis risus sed vulputate odio. Malesuada proin libero nunc consequat interdum. Vitae et leo duis ut diam quam nulla porttitor massa.
+
+        Integer malesuada nunc vel risus commodo viverra maecenas accumsan lacus. Purus gravida quis blandit turpis cursus in hac. Et magnis dis parturient montes nascetur ridiculus mus. Montes nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Proin gravida hendrerit lectus a. Sed risus ultricies tristique nulla. Augue eget arcu dictum varius duis at. Sit amet aliquam id diam maecenas ultricies. Varius duis at consectetur lorem donec massa sapien faucibus et. Morbi tristique senectus et netus et. Nunc mattis enim ut tellus elementum sagittis vitae. Non diam phasellus vestibulum lorem sed.
+
+        Id consectetur purus ut faucibus. Est velit egestas dui id ornare arcu odio. Bibendum at varius vel pharetra vel turpis nunc eget. Non enim praesent elementum facilisis leo vel fringilla. A diam sollicitudin tempor id eu nisl nunc. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. Sit amet nisl purus in mollis nunc sed. Id donec ultrices tincidunt arcu non sodales neque. Pulvinar sapien et ligula ullamcorper malesuada. Adipiscing elit pellentesque habitant morbi tristique senectus et. Mauris sit amet massa vitae tortor condimentum lacinia. In fermentum et sollicitudin ac orci. Maecenas sed enim ut sem viverra aliquet eget sit. Euismod nisi porta lorem mollis aliquam ut porttitor leo.
+    </p>
+
+    <h2>Timeline</h2>
+
+    <% if (allPosts.length > 0) { %>
+        <% console.log(typeof(allPosts)) %>
+        <% allPosts.forEach(function(post){ %>
+            <%// console.log(typeof(post)) %>
+            <h3><%= post.title %></h3>
+            <p>Id: <%= post.id %></p>
+            <% //console.log(post.text) %>
+            <p><% post.text %></p>
+            <p><%=// post.text.substring(0,100) + "..." %> <a href="/posts/<%= post.id %>">Read More</a></p>
+            <p>Likes: <%= post.likes %></p>
+            <sub>Posted in: <%= post.date %></sub>
+        <% }) %>
+    <% } else { %>
+        <h3><%= initialMessage %></h3>
+    <% } %>
+    
+
+
+<%- include('partials/footer') %>
