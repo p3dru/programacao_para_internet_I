@@ -16,16 +16,11 @@
     <h2>Timeline</h2>
 
     <% if (allPosts.length > 0) { %>
-        <% console.log(typeof(allPosts)) %>
-        <% allPosts.forEach(function(post){ %>
-            <%// console.log(typeof(post)) %>
-            <h3><%= post.title %></h3>
-            <p>Id: <%= post.id %></p>
-            <% //console.log(post.text) %>
-            <p><% post.text %></p>
-            <p><%=// post.text.substring(0,100) + "..." %> <a href="/posts/<%= post.id %>">Read More</a></p>
-            <p>Likes: <%= post.likes %></p>
-            <sub>Posted in: <%= post.date %></sub>
+        <% allPosts.forEach((post) => {%>
+            <h3><%= post.postagem_title %></h3>
+            <p><%= post.postagem_text %></p>
+            <sub>Id: <%= post.postagem_id %></sub><br>
+            <sub>Posted in: <%= post.postagem_date %></sub>
         <% }) %>
     <% } else { %>
         <h3><%= initialMessage %></h3>
