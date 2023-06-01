@@ -21,16 +21,7 @@ class Microblog{
     }
 
     retrieve(id){
-        //busca um post passando um id de postagem pra ela e retorna um json
-        var dados = [];
-
-        for(var i = 0; i < this.postagens.length; i++){
-            if(id == this.postagens[i].id){
-                dados = this.makeJSON(this.postagens[i]);
-            }
-        }
-        const json = JSON.stringify(dados);
-        return json;
+        
     }
 
     update(postagem){

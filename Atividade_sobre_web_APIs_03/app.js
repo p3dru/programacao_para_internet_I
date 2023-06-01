@@ -1,4 +1,5 @@
 const {Postagem, Microblog} = require('./classes');
+const {selectAll} = require('./functions')
 const {Pool} = require('pg');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ const app = express();
 var posts = [];
 var timelineInicial = 'Nenhum Post adicionado';
 const postagens = new Microblog();
+var contador = 0
 
 const pool = new Pool({
     host: 'localhost',
@@ -44,7 +46,8 @@ pool.query('select * from postagem')
         //res.send(dadosJson);
         dadosJson.forEach(element => {
             //insere cada postagem no posts
-            posts.push(element);           
+            posts.push(element);
+
         });
 
         //console.log(posts);
@@ -57,50 +60,49 @@ pool.query('select * from postagem')
 
 //gets
 app.get('/', function(req, res){
-    console.log(posts);
+    if (contador === 0){
+        for (var i = 0; i < posts.length; i++){
+            //carrega todos os posts para o objeto Miroblog
+            postagens.create(posts[i]);
+        }
+    }
+
+    //console.log(posts[9].postagem_id)
+
+    //var dadoObtido = postagens.retrieve(10);
+    //console.log(dadoObtido);
+    //console.log(posts[0].postagem_id);
+
+    
+    contador +=  1;
     res.render("home", {
         allPosts: posts,
         initialMessage: timelineInicial
     });
-
+    
 });
 
 app.get('/posts', function(req, res){
-    const pool = req.pool;
-
-    pool.query('select * from postagem')
-    .then((result) => {
-        var dados = result.rows;
-        var dadosJson = JSON.stringify(dados);
-        dadosJson = JSON.parse(dadosJson);
-        //console.log(typeof(dadosJson));
-        //console.log(dadosJson[0]);
-        res.send(dadosJson);
+    selectAll()
+    .then((result) =>{
+        res.send(result);
     })
     .catch((err) => {
-        console.error('Erro ao executar a consulta', err);
-        res.status(500).json({error: "erro ao buscar dados"});
-    });
+        console.log('Erro na pesquisa: ', err);
+    })
 });
 
 app.get('/posts/:id', function(req, res){
-    //retorna um json com o id pesquisado
     var postId = req.params.id;
-    //console.log(postId);
-
-    var dadoObtido = postagens.retrieve(postId);
-    //console.log(typeof(dadoObtido));
-    if (dadoObtido !== '[]'){
-        dadoObtido = JSON.parse(dadoObtido);
-        res.render('post', {
-            postTitle: dadoObtido.title,
-            postText: dadoObtido.text,
-            postLikes: dadoObtido.likes,
-            postDate: dadoObtido.date
-        });
-    } else {
-        res.status(404).send('Error 404');
-    }
+    //console.log(posts[postId]);
+    //console.log(posts);
+    res.render('post', {
+        postTitle: posts[postId-1].postagem_title,
+        postText: posts[postId-1].postagem_text,
+        postLikes: posts[postId-1].postagem_likes,
+        postId: posts[postId-1].postagem_id,
+        postDate: posts[postId-1].postagem_date
+    })
 });
 
 app.get('/create', function(req, res){
@@ -123,17 +125,7 @@ app.get('/api/posts', function(req, res){
 
 //delete
 app.delete('/posts/:id', function(req, res){
-    var postId = req.params.id;
-    //console.log(postId);
-
-    var dadoObtido = postagens.retrieve(postId);
-
-    if (dadoObtido !== '[]'){
-        postagens.delete(postId);
-        res.status(204).send('No content');
-    } else {
-        res.status(404).send('Not Found');
-    }
+    
 });
 
 //post
@@ -164,14 +156,22 @@ app.post('/create', function(req, res){
             var dadosJson = JSON.stringify(dados);
             dadosJson = JSON.parse(dadosJson);
 
-            var novoId = dadosJson[0].id;
+            selectAll()
+                .then((result) =>{
+                    posts.push(result);
+                })
+                .catch((err) => {
+                    console.log('Erro na pesquisa: ', err);
+                })
             //console.log(dadosJson[0].id);
-            res.redirect('/posts/'+ novoId);
+            console.log(typeof(posts[posts.lenght].postagem_id))
+            res.redirect('/posts/'+posts[posts.length].postagem_id);
         })
         .catch((err) => {
             console.error('Erro ao inserir dados: ', err);
             res.status(500).json({ error: 'Erro ao inserir dados' });
         });
+    
     
     
     //posts.push(newPost);
